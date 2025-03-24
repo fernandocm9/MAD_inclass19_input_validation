@@ -29,11 +29,8 @@ class MyCustomForm extends StatefulWidget {
 // Create a corresponding State class.
 // This class holds data related to the form.
 class MyCustomFormState extends State<MyCustomForm> {
-  // Create a global key that uniquely identifies the Form widget
-  // and allows validation of the form.
-  //
-  // Note: This is a GlobalKey<FormState>,
-  // not a GlobalKey<MyCustomFormState>.
+  // Create a global key that uniquely identifies the Form widget and allows validation of the form.
+  // Note: This is a GlobalKey<FormState>, not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -53,11 +50,14 @@ class MyCustomFormState extends State<MyCustomForm> {
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Please enter a username';
+              } else if (value.length < 3) {
+                return 'Username must be at least 3 characters';
               }
               return null;
             },
           ),
           TextFormField(
+            obscureText: true,
             decoration: const InputDecoration(
               hintText: 'Enter your password',
               labelText: 'Password',
@@ -67,6 +67,10 @@ class MyCustomFormState extends State<MyCustomForm> {
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Password must be at least 8 characters:\n1 uppercase, 1 lowercase, 1 number';
+              } else if(value.length < 8) {
+                return 'Password must be at least 8 characters:\n1 uppercase, 1 lowercase, 1 number';
+              } else if(!RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])').hasMatch(value)) {
+                return 'Password must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number';
               }
               return null;
             },
@@ -80,6 +84,10 @@ class MyCustomFormState extends State<MyCustomForm> {
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Please enter a valid email';
+              } else if(value.length < 5) {
+                return 'Email must be at least 5 characters';
+              } else if(!RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$').hasMatch(value)) {
+                return 'Please enter a valid email address';
               }
               return null;
             },
