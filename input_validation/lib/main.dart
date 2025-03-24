@@ -13,6 +13,25 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(title: const Text(appTitle)),
         body: const MyCustomForm(),
       ),
+      routes: <String, WidgetBuilder>{
+        '/form': (BuildContext context) => const MyCustomForm(),
+        '/success': (BuildContext context) => const SuccessPage(),
+      },
+    );
+  }
+}
+
+class SuccessPage extends StatelessWidget {
+  const SuccessPage({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Success'),
+      ),
+      body: const Center(
+        child: Text('Form submitted successfully!'),
+      ),
     );
   }
 }
@@ -70,7 +89,7 @@ class MyCustomFormState extends State<MyCustomForm> {
               } else if(value.length < 8) {
                 return 'Password must be at least 8 characters:\n1 uppercase, 1 lowercase, 1 number';
               } else if(!RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])').hasMatch(value)) {
-                return 'Password must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number';
+                return 'Password must be at least 8 characters:\n1 uppercase, 1 lowercase, 1 number';
               }
               return null;
             },
@@ -97,13 +116,16 @@ class MyCustomFormState extends State<MyCustomForm> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16),
             child: ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 // Validate returns true if the form is valid, or false otherwise.
                 if (_formKey.currentState!.validate()) {
                   // If the form is valid, display a snackbar. In the real world, you'd often call a server or save the information in a database.
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Processing Data')),
+                    
                   );
+                  await Future.delayed(const Duration(seconds: 5));
+                  Navigator.pushNamed(context, '/success' );
                 }
               },
               child: const Text('Submit'),
