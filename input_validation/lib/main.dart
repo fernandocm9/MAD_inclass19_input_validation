@@ -44,6 +44,10 @@ class MyCustomFormState extends State<MyCustomForm> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TextFormField(
+            decoration: const InputDecoration(
+              hintText: 'Enter your username',
+              labelText: 'Username',
+            ),
             // The validator receives the text that the user has
             // entered.
             validator: (value) {
@@ -53,6 +57,36 @@ class MyCustomFormState extends State<MyCustomForm> {
               return null;
             },
           ),
+          TextFormField(
+            decoration: const InputDecoration(
+              hintText: 'Enter your password',
+              labelText: 'Password',
+            ),
+            // The validator receives the text that the user has
+            // entered.
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter some text';
+              }
+              return null;
+            },
+          ),
+          TextFormField(
+            decoration: const InputDecoration(
+              hintText: 'Enter your email',
+              labelText: 'Email',
+            ),
+            // The validator receives the text that the user has
+            // entered.
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter some text';
+              }
+              return null;
+            },
+          ),
+          SizedBox(height: 10,),
+          InputDatePickerFormField(firstDate: DateTime(1925, 1, 1), lastDate: DateTime(2025, 12, 31)),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16),
             child: ElevatedButton(
