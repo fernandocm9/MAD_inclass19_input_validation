@@ -52,7 +52,7 @@ class MyCustomFormState extends State<MyCustomForm> {
             // entered.
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Please enter some text';
+                return 'Please enter a username';
               }
               return null;
             },
@@ -66,7 +66,7 @@ class MyCustomFormState extends State<MyCustomForm> {
             // entered.
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Please enter some text';
+                return 'Password must be at least 8 characters:\n1 uppercase, 1 lowercase, 1 number';
               }
               return null;
             },
@@ -76,28 +76,23 @@ class MyCustomFormState extends State<MyCustomForm> {
               hintText: 'Enter your email',
               labelText: 'Email',
             ),
-            // The validator receives the text that the user has
-            // entered.
+            // The validator receives the text that the user has entered.
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Please enter some text';
+                return 'Please enter a valid email';
               }
               return null;
             },
           ),
           SizedBox(height: 10,),
-          InputDatePickerFormField(firstDate: DateTime(1925, 1, 1), lastDate: DateTime(2025, 12, 31)),
+          InputDatePickerFormField(firstDate: DateTime(1925, 1, 1), lastDate: DateTime.now(), fieldLabelText: 'Date of Birth', fieldHintText: 'mm/dd/yyy',),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16),
             child: ElevatedButton(
               onPressed: () {
-                // Validate returns true if the form is valid, or false
-                // otherwise.
+                // Validate returns true if the form is valid, or false otherwise.
                 if (_formKey.currentState!.validate()) {
-                  // If the form is valid, display a snackbar. In the
-                  // real world,
-                  // you'd often call a server or save the information
-                  // in a database.
+                  // If the form is valid, display a snackbar. In the real world, you'd often call a server or save the information in a database.
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Processing Data')),
                   );
