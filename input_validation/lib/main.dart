@@ -112,7 +112,13 @@ class MyCustomFormState extends State<MyCustomForm> {
             },
           ),
           SizedBox(height: 10,),
-          InputDatePickerFormField(firstDate: DateTime(1925, 1, 1), lastDate: DateTime.now(), fieldLabelText: 'Date of Birth', fieldHintText: 'mm/dd/yyy',),
+          InputDatePickerFormField(
+            firstDate: DateTime(1925, 1, 1), 
+            lastDate: DateTime.now(), 
+            fieldLabelText: 'Date of Birth', 
+            fieldHintText: 'mm/dd/yyy',
+            errorInvalidText: 'Please enter a valid date',
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16),
             child: ElevatedButton(
@@ -122,10 +128,10 @@ class MyCustomFormState extends State<MyCustomForm> {
                   // If the form is valid, display a snackbar. In the real world, you'd often call a server or save the information in a database.
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Processing Data')),
-                    
                   );
                   await Future.delayed(const Duration(seconds: 5));
                   Navigator.pushNamed(context, '/success' );
+                  _formKey.currentState!.reset();
                 }
               },
               child: const Text('Submit'),
